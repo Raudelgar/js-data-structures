@@ -58,7 +58,20 @@ class BST {
 		} else {
 			let currentNode = this.root;
 			let parent = null;
-			const loop = (currentNode, parent) => {
+			const findBranch = (...args) => {
+				//root case
+				if (!args[1]) {
+					this.root = args[2];
+					args[2].left = args[0].left;
+					args[2].right = args[0].right;
+				} else if (args[0].value < args[1].value) {
+					args[1].left = !args[2] ? null : args[2];
+				} else {
+					args[1].right = !args[3] ? (!args[2] ? null : args[2]) : args[3];
+				}
+				return args[0];
+			};
+			while (currentNode) {
 				//if is equal === found
 				if (val === currentNode.value) {
 					this.count--;
@@ -105,28 +118,13 @@ class BST {
 					//if it less
 					parent = currentNode;
 					currentNode = currentNode.left;
-					return currentNode ? loop(currentNode, parent) : -1;
 				} else if (val > currentNode.value) {
 					//if bigger
 					parent = currentNode;
 					currentNode = currentNode.right;
-					return currentNode ? loop(currentNode, parent) : -1;
 				}
-			};
-			const findBranch = (...args) => {
-				//root case
-				if (!args[1]) {
-					this.root = args[2];
-					args[2].left = args[0].left;
-					args[2].right = args[0].right;
-				} else if (args[0].value < args[1].value) {
-					args[1].left = !args[2] ? null : args[2];
-				} else {
-					args[1].right = !args[3] ? (!args[2] ? null : args[2]) : args[3];
-				}
-				return args[0];
-			};
-			return loop(currentNode, parent);
+			}
+			return -1;
 		}
 	}
 
@@ -145,28 +143,6 @@ class BST {
 			}
 		}
 		return false;
-		//using recursive
-		// const find = currentNode => {
-		// 	//if it's equal return true
-		// 	if (val === currentNode.value) {
-		// 		return true;
-		// 	} else if (val < currentNode.value) {
-		// 		//if it's less, go left
-		// 		if (currentNode.left) {
-		// 			return find(currentNode.left);
-		// 		} else {
-		// 			return false;
-		// 		}
-		// 	} else {
-		// 		//if it's bigger, go right
-		// 		if (currentNode.right) {
-		// 			return find(currentNode.right);
-		// 		} else {
-		// 			return false;
-		// 		}
-		// 	}
-		// };
-		// return find(currentNode);
 	}
 
 	min() {
