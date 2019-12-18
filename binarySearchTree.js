@@ -197,17 +197,78 @@ class BST {
 
 	//depth first search
 
-	//depth first search in-order
-	dfsInOrder() {}
+	//in-order
+	//left, root, right
+	dfsInOrder() {
+		let result = [];
+		const traverse = node => {
+			if (node.left) traverse(node.left);
 
-	//depth first search pre-order
-	dfsPreOrder() {}
+			result.push(node.value);
 
-	//depth first search post-order
-	dfsPostOrder() {}
+			if (node.right) traverse(node.right);
+		};
+		traverse(this.root);
+		return result;
+	}
+
+	//pre-order
+	//root, left, right
+	dfsPreOrder() {
+		let result = [];
+		const traverse = node => {
+			result.push(node.value);
+
+			if (node.left) {
+				traverse(node.left);
+			}
+
+			if (node.right) {
+				traverse(node.right);
+			}
+		};
+		traverse(this.root);
+		return result;
+	}
+
+	//post-order
+	//left, right, root
+	dfsPostOrder() {
+		let result = [];
+		const traverse = node => {
+			if (node.left) {
+				traverse(node.left);
+			}
+
+			if (node.right) {
+				traverse(node.right);
+			}
+
+			result.push(node.value);
+		};
+		traverse(this.root);
+		return result;
+	}
 
 	//breadth first search
-	bfs() {}
+	bfs() {
+		let result = [];
+		let queue = [this.root];
+
+		while (queue.length) {
+			let node = queue.shift();
+			result.push(node.value);
+
+			if (node.left) {
+				queue.push(node.left);
+			}
+			if (node.right) {
+				queue.push(node.right);
+			}
+		}
+
+		return result;
+	}
 }
 
 module.exports = BST;
